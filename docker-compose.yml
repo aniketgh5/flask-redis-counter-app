@@ -1,0 +1,16 @@
+version: '3.8'  # Specify Compose file version
+
+services:
+  web:  # Service for the Flask app
+    build: .  # Build from the current directory's Dockerfile
+    ports:
+      - "5000:5000"  # Map host port 5000 to container port 5000
+    depends_on:
+      - redis  # Start Redis before the web app
+    volumes:
+      - .:/app  # Mount current dir for live code changes (optional for dev)
+
+  redis:  # Service for Redis
+    image: redis:alpine  # Use official Redis image
+    ports:
+      - "6379:6379"  # Expose Redis port (optional, for external access)
